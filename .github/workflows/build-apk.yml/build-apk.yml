@@ -1,5 +1,8 @@
 name: Build APK
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -7,11 +10,17 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
+          distribution: temurin
           java-version: '17'
-          distribution: 'temurin'
-      - run: chmod +x gradlew
-      - run: ./gradlew assembleDebug
+      - uses: android-actions/setup-android@v3
+      - name: Build APK
+        run: |
+          ls -la
+          APP_DIR=$(find . -maxdepth 3 -name "build.gradle*" | head -1 | xargs dirname)
+          echo "APP_DIR=$APP_DIR"
+          cd "$APP_DIR"
+          gradle assembleRelease
       - uses: actions/upload-artifact@v4
         with:
-          name: app-debug
-          path: aplicativo/build/outputs/apk/debug/*.apk
+          name: app-release
+          path: "**/build/outputs/apk/release/*.apk"
