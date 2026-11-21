@@ -1,0 +1,8 @@
+{
+  "name": "Remix Remix Mano AI",
+  "description": "Assistente de chat direto do Norte (Manaus) que gera imagens, cria Apps Script, ajuda a criar apps, faz cálculos e textos.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
